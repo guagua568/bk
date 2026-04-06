@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0L0K25TZHR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0L0K25TZHR');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUAGUA_SEC | Cyber Portal v4.0</title>
+    <title>GUAGUA_SEC | 极客资源矩阵 v4.2</title>
     <style>
         :root {
             --bg: #0d1117;
@@ -23,12 +31,12 @@
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             display: flex;
             min-height: 100vh;
         }
 
-        /* --- 侧边栏优化 --- */
+        /* --- 侧边栏 --- */
         aside {
             width: var(--sidebar-width);
             background: var(--sidebar);
@@ -40,143 +48,86 @@
             z-index: 100;
         }
 
-        .brand {
-            padding: 40px 20px;
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(88,166,255,0.1), transparent);
-        }
-        .brand h1 { font-size: 1.4rem; color: #fff; letter-spacing: 1px; }
+        .brand { padding: 40px 20px; text-align: center; }
+        .brand h1 { font-size: 1.4rem; color: #fff; letter-spacing: 2px; }
         .brand span { color: var(--cyan); font-family: monospace; font-size: 0.8rem; }
 
         .search-box { padding: 10px 20px; }
         #searchInput {
-            width: 100%;
-            padding: 8px 12px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: #fff;
-            outline: none;
-            font-size: 0.85rem;
+            width: 100%; padding: 10px; background: var(--bg);
+            border: 1px solid var(--border); border-radius: 6px;
+            color: #fff; outline: none; font-size: 0.85rem;
         }
-        #searchInput:focus { border-color: var(--cyan); box-shadow: 0 0 8px rgba(88,166,255,0.3); }
 
-        aside ul { list-style: none; margin-top: 20px; overflow-y: auto; }
+        aside ul { list-style: none; margin-top: 20px; overflow-y: auto; flex-grow: 1; }
         aside a {
-            display: block;
-            padding: 12px 25px;
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+            display: block; padding: 12px 25px; color: var(--text-dim);
+            text-decoration: none; font-size: 0.9rem; transition: 0.2s;
+            border-left: 3px solid transparent;
         }
         aside a:hover, aside a.active {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(88, 166, 255, 0.1);
             color: var(--cyan);
-            padding-left: 30px;
+            border-left: 3px solid var(--cyan);
         }
 
-        /* --- 主内容区优化 --- */
+        /* --- 主内容 --- */
         main {
             margin-left: var(--sidebar-width);
             flex-grow: 1;
             padding: 40px 50px;
-            max-width: 1300px;
+            max-width: 1400px;
         }
 
-        section { 
-            padding: 60px 0 20px; 
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        section { padding: 60px 0 20px; border-bottom: 1px solid var(--border); }
+        h2 { font-size: 1.8rem; margin-bottom: 30px; color: #fff; display: flex; align-items: center; }
+        h2::before { content: "#"; color: var(--cyan); margin-right: 10px; }
 
-        h2 { 
-            font-size: 1.8rem; 
-            margin-bottom: 30px; 
-            display: flex; 
-            align-items: center;
-            color: #fff;
-        }
-        h2::before { content: "#"; color: var(--cyan); margin-right: 10px; font-family: monospace; }
-
-        /* 资源网格：自适应紧凑型 */
         .resource-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
         }
 
         .item {
             background: var(--card);
             border: 1px solid var(--border);
-            padding: 16px;
+            padding: 20px;
             border-radius: 8px;
             text-decoration: none;
             color: inherit;
-            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            transition: 0.3s;
         }
         .item:hover {
-            border-color: var(--text-dim);
-            background: #30363d;
+            border-color: var(--cyan);
             transform: translateY(-4px);
+            background: #2d333b;
         }
-        .item strong { color: var(--cyan); font-size: 1rem; display: block; margin-bottom: 6px; }
-        .item p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
-        
-        /* 外部链接小箭头图标 */
-        .item::after {
-            content: "↗";
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .item:hover::after { opacity: 1; }
+        .item strong { color: var(--cyan); display: block; margin-bottom: 8px; font-size: 1.1rem; }
+        .item p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.4; }
 
-        /* 表格美化 */
+        /* 表格样式 */
         .table-container { 
-            background: var(--card); 
-            border: 1px solid var(--border); 
-            border-radius: 12px; 
-            overflow: hidden;
-            margin-top: 20px;
+            background: var(--card); border: 1px solid var(--border); 
+            border-radius: 12px; overflow: hidden; margin-top: 20px;
         }
         table { width: 100%; border-collapse: collapse; }
-        th { background: rgba(88,166,255,0.05); color: #fff; text-align: left; padding: 16px; font-size: 0.9rem; }
-        td { padding: 14px 16px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-dim); }
-        tr:hover td { color: #fff; background: rgba(255,255,255,0.02); }
-        .status-up { color: var(--accent); font-weight: bold; }
+        th, td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: rgba(88, 166, 255, 0.05); color: var(--accent); }
+        tr:hover { background: rgba(255,255,255,0.02); }
 
-        /* 返回顶部 */
         #backToTop {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--cyan);
-            color: #fff;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
+            position: fixed; bottom: 30px; right: 30px; background: var(--cyan);
+            color: #fff; width: 45px; height: 45px; border-radius: 50%;
+            display: none; justify-content: center; align-items: center;
+            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
 
-        /* 移动端处理 */
         @media (max-width: 900px) {
             aside { width: 100%; height: auto; position: relative; }
             main { margin-left: 0; padding: 20px; }
-            .resource-grid { grid-template-columns: 1fr 1fr; }
+            .resource-grid { grid-template-columns: 1fr; }
         }
-        @media (max-width: 600px) { .resource-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -184,194 +135,172 @@
     <aside>
         <div class="brand">
             <h1>GUAGUA_SEC</h1>
-            <span>RESOURCE MATRIX v4.0</span>
+            <span>v4.2 | GA INJECTED</span>
         </div>
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="搜索资源关键字..." onkeyup="filterContent()">
+            <input type="text" id="searchInput" placeholder="搜索资源..." onkeyup="filterContent()">
         </div>
-        <ul id="menu">
+        <ul>
             <li><a href="#offline">离线靶场</a></li>
             <li><a href="#online">在线靶场</a></li>
             <li><a href="#tools">安全工具</a></li>
             <li><a href="#vps">廉价主机</a></li>
             <li><a href="#linux">镜像分发</a></li>
-            <li><a href="#cloud">云端存储</a></li>
+            <li><a href="#cloud">云盘存储</a></li>
         </ul>
     </aside>
 
     <main>
-        <header>
-            <p style="color: var(--cyan); font-family: monospace;">[+] SYSTEM READY...</p>
-            <p style="color: var(--text-dim);">整合全球顶级安全资源，致力于更高效的渗透测试学习路径。</p>
-        </header>
-
         <section id="offline">
-            <h2>网络安全离线靶场</h2>
+            <h2>网络安全离线靶场 (10+)</h2>
             <div class="resource-grid">
-                <a href="https://www.vulnhub.com" class="item"><strong>VulnHub</strong><p>OSCP 及 CTF 练习者的离线 VM 资源库。</p></a>
-                <a href="#" class="item"><strong>Metasploitable 2</strong><p>经典的 Linux 受害机系统，包含全栈漏洞。</p></a>
-                <a href="#" class="item"><strong>DVWA</strong><p>Damn Vulnerable Web App，PHP 入门必刷。</p></a>
-                <a href="#" class="item"><strong>Juice Shop</strong><p>OWASP 出品的现代 Node.js 漏洞演练场。</p></a>
-                <a href="#" class="item"><strong>WebGoat</strong><p>专注于 Java 应用安全的官方级靶场。</p></a>
-                <a href="#" class="item"><strong>SQLi-Labs</strong><p>SQL 注入全场景模拟：报错、盲注、二次注入。</p></a>
-                <a href="#" class="item"><strong>Upload-Labs</strong><p>各种 WAF 绕过、文件头伪造、解析漏洞。 </p></a>
-                <a href="#" class="item"><strong>XSS-Labs</strong><p>专注于前端跨站脚本攻击的闯关平台。</p></a>
-                <a href="#" class="item"><strong>VulnStack</strong><p>国内红队常用的域环境、内网实战模拟。</p></a>
-                <a href="#" class="item"><strong>Pikachu</strong><p>包含更多逻辑漏洞、CSRF 模拟的综合环境。</p></a>
-                <a href="#" class="item"><strong>BWAPP</strong><p>超过 100 个 Bug 的 PHP 受害环境。</p></a>
+                <a href="https://www.vulnhub.com/" class="item"><strong>VulnHub</strong><p>最全的单机渗透镜像站，OSCP 备考首选。</p></a>
+                <a href="#" class="item"><strong>Metasploitable 2</strong><p>官方经典的易受攻击 Linux 服务端。</p></a>
+                <a href="#" class="item"><strong>DVWA</strong><p>最经典的 PHP Web 漏洞练习环境。</p></a>
+                <a href="#" class="item"><strong>OWASP Juice Shop</strong><p>现代 Web (JS/Node) 漏洞演练顶级项目。</p></a>
+                <a href="#" class="item"><strong>WebGoat</strong><p>OWASP 官方针对 Java 安全的教学平台。</p></a>
+                <a href="#" class="item"><strong>SQLi-Labs</strong><p>专注于 SQL 注入全场景的专项靶场。</p></a>
+                <a href="#" class="item"><strong>Upload-Labs</strong><p>文件上传绕过及解析漏洞专项练习。</p></a>
+                <a href="#" class="item"><strong>XSS-Labs</strong><p>20 关跨站脚本攻击专项闯关项目。</p></a>
+                <a href="#" class="item"><strong>Pikachu</strong><p>国内优秀的综合性 Web 漏洞练习靶场。</p></a>
+                <a href="#" class="item"><strong>VulnStack</strong><p>红队内网渗透及域渗透实战环境系列。</p></a>
+                <a href="#" class="item"><strong>bWAPP</strong><p>基于 PHP 的超多漏洞集合，涵盖 A1-A10。</p></a>
             </div>
         </section>
 
         <section id="online">
-            <h2>网络安全在线靶场</h2>
+            <h2>网络安全在线靶场 (10+)</h2>
             <div class="resource-grid">
-                <a href="https://www.hackthebox.com" class="item"><strong>Hack The Box</strong><p>实战渗透的高端战场，拥有活跃的社区。</p></a>
-                <a href="https://tryhackme.com" class="item"><strong>TryHackMe</strong><p>手把手教学，非常适合初中生及零基础入门。</p></a>
-                <a href="#" class="item"><strong>CTF.show</strong><p>国内最大 Web 题库，涵盖各种新颖赛题。</p></a>
-                <a href="#" class="item"><strong>BUUCTF</strong><p>稳定复现各大 CTF 赛事环境的公益平台。</p></a>
-                <a href="#" class="item"><strong>picoCTF</strong><p>CMU 开发，面向全球中学生的网络安全竞赛。</p></a>
-                <a href="#" class="item"><strong>OverTheWire</strong><p>通过 SSH 游戏学习 Linux 基础及提权逻辑。</p></a>
-                <a href="#" class="item"><strong>PortSwigger</strong><p>Burp 官方学院，免费且深度的 Web 教学。</p></a>
-                <a href="#" class="item"><strong>Root-Me</strong><p>老牌多维挑战赛，包含加解密与逆向题目。</p></a>
-                <a href="#" class="item"><strong>CyberDefenders</strong><p>专注蓝队/防御侧，练习数字取证与应急响应。</p></a>
-                <a href="#" class="item"><strong>HackThisSite</strong><p>黑客文化的活化石，经典的闯关站点。</p></a>
-                <a href="#" class="item"><strong>Attack Defense</strong><p>基于浏览器的实验室，适合快速练习特定 CVE。</p></a>
+                <a href="https://www.hackthebox.com/" class="item"><strong>Hack The Box</strong><p>全球含金量最高的实战渗透平台。</p></a>
+                <a href="https://tryhackme.com/" class="item"><strong>TryHackMe</strong><p>带教学路径，对初学者极其友好。</p></a>
+                <a href="https://ctf.show/" class="item"><strong>CTF.show</strong><p>国内最大、题目最全的 Web 练习基地。</p></a>
+                <a href="https://buuoj.cn/" class="item"><strong>BUUCTF</strong><p>各大赛题环境复现的首选平台。</p></a>
+                <a href="https://picoctf.org/" class="item"><strong>picoCTF</strong><p>中学生入门网络安全的最优选。</p></a>
+                <a href="https://overthewire.org/" class="item"><strong>OverTheWire</strong><p>通过命令行闯关学习 Linux 基础。</p></a>
+                <a href="https://portswigger.net/web-security" class="item"><strong>PortSwigger Academy</strong><p>Burp 官方出品，深度学习 Web 漏洞。</p></a>
+                <a href="https://www.root-me.org/" class="item"><strong>Root-Me</strong><p>欧洲知名的多领域安全技能评估网站。</p></a>
+                <a href="https://ctf.bugku.com/" class="item"><strong>Bugku</strong><p>国内老牌 CTF 入门及进阶练习场。</p></a>
+                <a href="https://www.cyberdefenders.org/" class="item"><strong>CyberDefenders</strong><p>侧重蓝队、取证与应急响应的平台。</p></a>
+                <a href="https://pwnable.tw/" class="item"><strong>Pwnable.tw</strong><p>高难度的 Pwn 专项练习平台。</p></a>
             </div>
         </section>
 
         <section id="tools">
-            <h2>常见安全工具官网</h2>
+            <h2>常见安全工具官网 (10+)</h2>
             <div class="resource-grid">
-                <a href="https://portswigger.net/burp" class="item"><strong>Burp Suite</strong><p>渗透测试第一利器，全方位 Web 代理分析。</p></a>
-                <a href="https://nmap.org" class="item"><strong>Nmap</strong><p>网络拓扑发现与端口服务探测的标准工具。</p></a>
-                <a href="#" class="item"><strong>Metasploit</strong><p>漏洞开发与渗透利用的工业级框架。</p></a>
-                <a href="#" class="item"><strong>SQLmap</strong><p>全自动 SQL 注入工具，支持多种数据库类型。</p></a>
-                <a href="#" class="item"><strong>Wireshark</strong><p>流量嗅探与包层级协议深挖分析。</p></a>
-                <a href="#" class="item"><strong>Cobalt Strike</strong><p>后渗透 C2 (命令控制) 权限维持核心工具。</p></a>
-                <a href="#" class="item"><strong>Ghidra</strong><p>NSA 出品的逆向神器，支持多架构反编译。</p></a>
-                <a href="#" class="item"><strong>Xray Scanner</strong><p>国产自动化扫描利器，PoC 极其丰富。</p></a>
-                <a href="#" class="item"><strong>FRP</strong><p>穿透内网、映射公网服务的首选反向代理。</p></a>
-                <a href="#" class="item"><strong>Subfinder</strong><p>基于 API 的超快子域名发现与枚举。</p></a>
-                <a href="#" class="item"><strong>Amass</strong><p>OWASP 旗下深度资产收集与测绘工具。</p></a>
+                <a href="https://portswigger.net/burp" class="item"><strong>Burp Suite</strong><p>Web 渗透测试的绝对核心工具。</p></a>
+                <a href="https://nmap.org/" class="item"><strong>Nmap</strong><p>网络测绘、端口发现与服务审计标准。</p></a>
+                <a href="https://www.metasploit.com/" class="item"><strong>Metasploit</strong><p>漏洞开发与渗透利用的百科全书。</p></a>
+                <a href="https://sqlmap.org/" class="item"><strong>SQLmap</strong><p>SQL 注入自动化测试第一利器。</p></a>
+                <a href="https://www.wireshark.org/" class="item"><strong>Wireshark</strong><p>网络封包层级的深度分析神器。</p></a>
+                <a href="https://ghidra-re.org/" class="item"><strong>Ghidra</strong><p>NSA 开发的顶级开源逆向工程套件。</p></a>
+                <a href="https://xray.cool/" class="item"><strong>Xray</strong><p>国内红队常用的插件化自动扫描引擎。</p></a>
+                <a href="https://www.cobaltstrike.com/" class="item"><strong>Cobalt Strike</strong><p>红队 C2 协作与权限维持工业标准。</p></a>
+                <a href="https://github.com/fatedier/frp" class="item"><strong>FRP</strong><p>内网穿透与反向代理高性能工具。</p></a>
+                <a href="https://github.com/projectdiscovery/httpx" class="item"><strong>Httpx</strong><p>极速 HTTP 存活探测与信息收集工具。</p></a>
+                <a href="https://github.com/OWASP/Amass" class="item"><strong>Amass</strong><p>深度子域名枚举与外部资产发现。</p></a>
             </div>
         </section>
 
         <section id="vps">
-            <h2>廉价 VPS & 运维推荐</h2>
+            <h2>廉价 VPS 推荐 (10+)</h2>
             <div class="table-container">
                 <table>
                     <thead>
-                        <tr><th>运营商</th><th>优势特点</th><th>参考价格</th><th>运行状态</th></tr>
+                        <tr><th>服务商</th><th>核心优势</th><th>价格</th><th>推荐</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>RackNerd</td><td>支持支付宝，价格极低，适合做扫描器</td><td>$10+/年</td><td class="status-up">Stable</td></tr>
-                        <tr><td>CloudCone</td><td>按小时计费，IP 被墙可随时销毁重建</td><td>$15+/年</td><td class="status-up">Stable</td></tr>
-                        <tr><td>Hetzner</td><td>欧洲之王，超强独立 CPU 性能，适合编译</td><td>€4+/月</td><td class="status-up">Fast</td></tr>
-                        <tr><td>Bandwagon</td><td>CN2 GIA 特化线路，国内连接速度第一</td><td>$49+/年</td><td class="status-up">Stable</td></tr>
-                        <tr><td>Oracle Cloud</td><td>ARM 永久免费 4C24G，神级福利</td><td>$0</td><td class="status-up">Free</td></tr>
-                        <tr><td>DigitalOcean</td><td>开发者社区文档最全，UI 极致丝滑</td><td>$4+/月</td><td class="status-up">Stable</td></tr>
-                        <tr><td>Vultr</td><td>全球机房布局最广，按需部署</td><td>$5+/月</td><td class="status-up">Stable</td></tr>
-                        <tr><td>BuyVM</td><td>卢森堡抗投诉，无视版权版权投诉</td><td>$3.5+/月</td><td class="status-up">Shielded</td></tr>
-                        <tr><td>AWS Lightsail</td><td>入门级云服务，首季通常提供免费试用</td><td>$3.5+/月</td><td class="status-up">Stable</td></tr>
-                        <tr><td>HostDare</td><td>针对亚洲优化的平价线路，稳定性好</td><td>$25+/年</td><td class="status-up">Stable</td></tr>
-                        <tr><td>Linode</td><td>极致的老牌稳定，SSD 读写性能优秀</td><td>$5+/月</td><td class="status-up">Stable</td></tr>
+                        <tr><td>RackNerd</td><td>极低廉价格，吃灰/反代首选</td><td>$10+/年</td><td>⭐⭐⭐⭐⭐</td></tr>
+                        <tr><td>CloudCone</td><td>按时计费，IP 更换灵活</td><td>$15+/年</td><td>⭐⭐⭐⭐</td></tr>
+                        <tr><td>Bandwagon</td><td>CN2 GIA 线路，国内连接极速</td><td>$49+/年</td><td>⭐⭐⭐⭐</td></tr>
+                        <tr><td>Hetzner</td><td>欧洲之王，CPU/编译性能强悍</td><td>€4+/月</td><td>⭐⭐⭐⭐⭐</td></tr>
+                        <tr><td>Oracle Cloud</td><td>ARM 架构永久免费 4C24G</td><td>$0</td><td>⭐⭐⭐⭐</td></tr>
+                        <tr><td>Vultr</td><td>全球机房广，支持按需开关机</td><td>$5+/月</td><td>⭐⭐⭐</td></tr>
+                        <tr><td>DigitalOcean</td><td>UI 简洁，文档丰富，口碑极佳</td><td>$4+/月</td><td>⭐⭐⭐⭐</td></tr>
+                        <tr><td>BuyVM</td><td>抗投诉，支持加挂超大存储块</td><td>$3.5+/月</td><td>⭐⭐⭐⭐</td></tr>
+                        <tr><td>AWS Lightsail</td><td>亚马逊大厂保证，线路稳定</td><td>$3.5+/月</td><td>⭐⭐⭐</td></tr>
+                        <tr><td>Linode</td><td>老牌稳定，磁盘 IO 性能非常棒</td><td>$5+/月</td><td>⭐⭐⭐</td></tr>
+                        <tr><td>HostDare</td><td>美西优化线路，支持支付宝</td><td>$25+/年</td><td>⭐⭐⭐</td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
         <section id="linux">
-            <h2>常见 Linux 官方镜像</h2>
+            <h2>系统镜像分发 (10+)</h2>
             <div class="resource-grid">
-                <a href="https://www.kali.org" class="item"><strong>Kali Linux</strong><p>安全审计与渗透测试最全能的 OS。</p></a>
-                <a href="#" class="item"><strong>Parrot Sec</strong><p>更侧重于日常开发与匿名性的安全系统。</p></a>
-                <a href="#" class="item"><strong>GrapheneOS</strong><p>基于安卓的移动端隐私安全最终方案。</p></a>
-                <a href="#" class="item"><strong>Arch Linux</strong><p>极简主义者的圣地，一切从零构建。</p></a>
-                <a href="#" class="item"><strong>Debian Stable</strong><p>服务器环境最稳定、最纯粹的系统。</p></a>
-                <a href="#" class="item"><strong>Alpine Linux</strong><p>体积微小，最适合 Docker 容器化部署。</p></a>
-                <a href="#" class="item"><strong>CentOS Stream</strong><p>企业级 RHEL 的开发前沿实验场。</p></a>
-                <a href="#" class="item"><strong>Ubuntu Server</strong><p>应用生态最丰富的云服务器系统。</p></a>
-                <a href="#" class="item"><strong>BlackArch</strong><p>Arch 分支，包含超 2800 个工具。</p></a>
-                <a href="#" class="item"><strong>Tails OS</strong><p>为了遗忘而生，彻底隐匿数字痕迹。</p></a>
-                <a href="#" class="item"><strong>TUNA 镜像站</strong><p>清华大学开源镜像站，国内极速下载。</p></a>
+                <a href="https://www.kali.org/" class="item"><strong>Kali Linux</strong><p>最全能的渗透测试发行版。</p></a>
+                <a href="https://www.parrotsec.org/" class="item"><strong>Parrot OS</strong><p>更轻巧的安全工作站系统。</p></a>
+                <a href="https://grapheneos.org/" class="item"><strong>GrapheneOS</strong><p>Google Pixel 专属隐私安全固件。</p></a>
+                <a href="https://www.archlinux.org/" class="item"><strong>Arch Linux</strong><p>高度定制，适合硬核极客。</p></a>
+                <a href="https://www.debian.org/" class="item"><strong>Debian Stable</strong><p>服务器环境最纯净的基石。</p></a>
+                <a href="https://www.ubuntu.com/" class="item"><strong>Ubuntu Server</strong><p>云端兼容性最好的通用系统。</p></a>
+                <a href="https://alpinelinux.org/" class="item"><strong>Alpine Linux</strong><p>极简 Linux，最适合 Docker 镜像。</p></a>
+                <a href="https://rockylinux.org/" class="item"><strong>Rocky Linux</strong><p>CentOS 最佳稳定替代方案。</p></a>
+                <a href="https://tails.boum.org/" class="item"><strong>Tails OS</strong><p>内存运行，隐匿足迹的极致方案。</p></a>
+                <a href="https://mirrors.tuna.tsinghua.edu.cn/" class="item"><strong>清华 TUNA 镜像站</strong><p>国内高速下载各大 Linux 发行版。</p></a>
+                <a href="https://mirrors.ustc.edu.cn/" class="item"><strong>中科大镜像站</strong><p>国内另一顶级 Linux 镜像源。</p></a>
             </div>
         </section>
 
         <section id="cloud">
-            <h2>常见云盘推荐</h2>
+            <h2>云端存储推荐 (10+)</h2>
             <div class="resource-grid">
-                <a href="https://www.alipan.com" class="item"><strong>阿里云盘</strong><p>大文件传输快，国内生态整合好。</p></a>
-                <a href="#" class="item"><strong>123 云盘</strong><p>不限速、支持直链，目前极佳的分享盘。</p></a>
-                <a href="#" class="item"><strong>Proton Drive</strong><p>端到端加密，适合保存敏感安全文档。</p></a>
-                <a href="#" class="item"><strong>Google Drive</strong><p>全球协作第一流，第三方应用整合丰富。</p></a>
-                <a href="#" class="item"><strong>MEGA</strong><p>经典的加密网盘，50GB 初始空间吸引力大。</p></a>
-                <a href="#" class="item"><strong>OneDrive</strong><p>Office 365 深度绑定，原生系统同步。</p></a>
-                <a href="#" class="item"><strong>蓝奏云</strong><p>小软件、脚本分发利器，不限速。</p></a>
-                <a href="#" class="item"><strong>Dropbox</strong><p>同步冲突处理最稳的老牌云存储。</p></a>
-                <a href="#" class="item"><strong>TeraBox</strong><p>百度海外版，适合超大容量备份。</p></a>
-                <a href="#" class="item"><strong>LanzouX</strong><p>更隐蔽的蓝奏分发地址。</p></a>
-                <a href="#" class="item"><strong>pCloud</strong><p>一次性买断终身空间，无月租压力。</p></a>
+                <a href="https://www.alipan.com/" class="item"><strong>阿里云盘</strong><p>国内生态好，大文件上传首选。</p></a>
+                <a href="https://www.123pan.com/" class="item"><strong>123 云盘</strong><p>直链、不限速、容量大，口碑极佳。</p></a>
+                <a href="https://proton.me/drive" class="item"><strong>Proton Drive</strong><p>高隐私全加密云存储方案。</p></a>
+                <a href="https://www.google.com/drive/" class="item"><strong>Google Drive</strong><p>全球资源同步与协作顶级工具。</p></a>
+                <a href="https://mega.io/" class="item"><strong>MEGA</strong><p>老牌端到端加密盘，隐私保护强。</p></a>
+                <a href="https://www.dropbox.com/" class="item"><strong>Dropbox</strong><p>同步技术标杆，支持多端无缝同步。</p></a>
+                <a href="https://www.lanzou.com/" class="item"><strong>蓝奏云</strong><p>国内分享小工具、脚本的最佳选择。</p></a>
+                <a href="https://onedrive.live.com/" class="item"><strong>OneDrive</strong><p>Windows 深度整合，Office 协作首选。</p></a>
+                <a href="https://pcloud.com/" class="item"><strong>pCloud</strong><p>瑞士背景，支持终身买断制。</p></a>
+                <a href="https://www.terabox.com/" class="item"><strong>TeraBox</strong><p>百度海外版，超大免费空间。</p></a>
+                <a href="https://www.icloud.com/" class="item"><strong>iCloud</strong><p>Apple 生态内最无缝的备份方案。</p></a>
             </div>
         </section>
 
         <footer>
-            <p>&copy; 2026 GUAGUA_SEC | Designed for White Hats.</p>
+            <p>&copy; 2026 GUAGUA_SEC | STAY CURIOUS, STAY PROTECTED.</p>
         </footer>
     </main>
 
     <div id="backToTop" onclick="window.scrollTo(0,0)">↑</div>
 
     <script>
-        // 搜索过滤功能
+        // 搜索过滤
         function filterContent() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const items = document.getElementsByClassName('item');
-            
             for (let item of items) {
                 const text = item.textContent.toLowerCase();
                 item.style.display = text.includes(input) ? "" : "none";
             }
         }
 
-        // 返回顶部按钮逻辑
+        // 返回顶部
         window.onscroll = function() {
             const btn = document.getElementById("backToTop");
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                 btn.style.display = "flex";
             } else {
                 btn.style.display = "none";
             }
         };
 
-        // 导航栏高亮追踪
+        // 导航栏联动
         const sections = document.querySelectorAll("section");
         const navLinks = document.querySelectorAll("aside a");
-
         window.addEventListener("scroll", () => {
             let current = "";
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute("id");
-                }
+            sections.forEach(s => {
+                if (pageYOffset >= s.offsetTop - 120) current = s.getAttribute("id");
             });
-
             navLinks.forEach(a => {
                 a.classList.remove("active");
-                if (a.getAttribute("href").includes(current)) {
-                    a.classList.add("active");
-                }
+                if (a.getAttribute("href").includes(current)) a.classList.add("active");
             });
         });
-        <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0L0K25TZHR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-0L0K25TZHR');
-</script>
     </script>
 </body>
 </html>
