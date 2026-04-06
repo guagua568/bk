@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUAGUA_SEC | Cyber Portal v4.0</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --sidebar: #161b22;
+            --card: #21262d;
+            --border: #30363d;
+            --cyan: #58a6ff;
+            --accent: #7ee787;
+            --text: #c9d1d9;
+            --text-dim: #8b949e;
+            --sidebar-width: 260px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- 侧边栏优化 --- */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .brand {
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(88,166,255,0.1), transparent);
+        }
+        .brand h1 { font-size: 1.4rem; color: #fff; letter-spacing: 1px; }
+        .brand span { color: var(--cyan); font-family: monospace; font-size: 0.8rem; }
+
+        .search-box { padding: 10px 20px; }
+        #searchInput {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: #fff;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        #searchInput:focus { border-color: var(--cyan); box-shadow: 0 0 8px rgba(88,166,255,0.3); }
+
+        aside ul { list-style: none; margin-top: 20px; overflow-y: auto; }
+        aside a {
+            display: block;
+            padding: 12px 25px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        aside a:hover, aside a.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--cyan);
+            padding-left: 30px;
+        }
+
+        /* --- 主内容区优化 --- */
+        main {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 40px 50px;
+            max-width: 1300px;
+        }
+
+        section { 
+            padding: 60px 0 20px; 
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { 
+            font-size: 1.8rem; 
+            margin-bottom: 30px; 
+            display: flex; 
+            align-items: center;
+            color: #fff;
+        }
+        h2::before { content: "#"; color: var(--cyan); margin-right: 10px; font-family: monospace; }
+
+        /* 资源网格：自适应紧凑型 */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .item:hover {
+            border-color: var(--text-dim);
+            background: #30363d;
+            transform: translateY(-4px);
+        }
+        .item strong { color: var(--cyan); font-size: 1rem; display: block; margin-bottom: 6px; }
+        .item p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
+        
+        /* 外部链接小箭头图标 */
+        .item::after {
+            content: "↗";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .item:hover::after { opacity: 1; }
+
+        /* 表格美化 */
+        .table-container { 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: rgba(88,166,255,0.05); color: #fff; text-align: left; padding: 16px; font-size: 0.9rem; }
+        td { padding: 14px 16px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-dim); }
+        tr:hover td { color: #fff; background: rgba(255,255,255,0.02); }
+        .status-up { color: var(--accent); font-weight: bold; }
+
+        /* 返回顶部 */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--cyan);
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        /* 移动端处理 */
+        @media (max-width: 900px) {
+            aside { width: 100%; height: auto; position: relative; }
+            main { margin-left: 0; padding: 20px; }
+            .resource-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) { .resource-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="brand">
+            <h1>GUAGUA_SEC</h1>
+            <span>RESOURCE MATRIX v4.0</span>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="搜索资源关键字..." onkeyup="filterContent()">
+        </div>
+        <ul id="menu">
+            <li><a href="#offline">离线靶场</a></li>
+            <li><a href="#online">在线靶场</a></li>
+            <li><a href="#tools">安全工具</a></li>
+            <li><a href="#vps">廉价主机</a></li>
+            <li><a href="#linux">镜像分发</a></li>
+            <li><a href="#cloud">云端存储</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <header>
+            <p style="color: var(--cyan); font-family: monospace;">[+] SYSTEM READY...</p>
+            <p style="color: var(--text-dim);">整合全球顶级安全资源，致力于更高效的渗透测试学习路径。</p>
+        </header>
+
+        <section id="offline">
+            <h2>网络安全离线靶场</h2>
+            <div class="resource-grid">
+                <a href="https://www.vulnhub.com" class="item"><strong>VulnHub</strong><p>OSCP 及 CTF 练习者的离线 VM 资源库。</p></a>
+                <a href="#" class="item"><strong>Metasploitable 2</strong><p>经典的 Linux 受害机系统，包含全栈漏洞。</p></a>
+                <a href="#" class="item"><strong>DVWA</strong><p>Damn Vulnerable Web App，PHP 入门必刷。</p></a>
+                <a href="#" class="item"><strong>Juice Shop</strong><p>OWASP 出品的现代 Node.js 漏洞演练场。</p></a>
+                <a href="#" class="item"><strong>WebGoat</strong><p>专注于 Java 应用安全的官方级靶场。</p></a>
+                <a href="#" class="item"><strong>SQLi-Labs</strong><p>SQL 注入全场景模拟：报错、盲注、二次注入。</p></a>
+                <a href="#" class="item"><strong>Upload-Labs</strong><p>各种 WAF 绕过、文件头伪造、解析漏洞。 </p></a>
+                <a href="#" class="item"><strong>XSS-Labs</strong><p>专注于前端跨站脚本攻击的闯关平台。</p></a>
+                <a href="#" class="item"><strong>VulnStack</strong><p>国内红队常用的域环境、内网实战模拟。</p></a>
+                <a href="#" class="item"><strong>Pikachu</strong><p>包含更多逻辑漏洞、CSRF 模拟的综合环境。</p></a>
+                <a href="#" class="item"><strong>BWAPP</strong><p>超过 100 个 Bug 的 PHP 受害环境。</p></a>
+            </div>
+        </section>
+
+        <section id="online">
+            <h2>网络安全在线靶场</h2>
+            <div class="resource-grid">
+                <a href="https://www.hackthebox.com" class="item"><strong>Hack The Box</strong><p>实战渗透的高端战场，拥有活跃的社区。</p></a>
+                <a href="https://tryhackme.com" class="item"><strong>TryHackMe</strong><p>手把手教学，非常适合初中生及零基础入门。</p></a>
+                <a href="#" class="item"><strong>CTF.show</strong><p>国内最大 Web 题库，涵盖各种新颖赛题。</p></a>
+                <a href="#" class="item"><strong>BUUCTF</strong><p>稳定复现各大 CTF 赛事环境的公益平台。</p></a>
+                <a href="#" class="item"><strong>picoCTF</strong><p>CMU 开发，面向全球中学生的网络安全竞赛。</p></a>
+                <a href="#" class="item"><strong>OverTheWire</strong><p>通过 SSH 游戏学习 Linux 基础及提权逻辑。</p></a>
+                <a href="#" class="item"><strong>PortSwigger</strong><p>Burp 官方学院，免费且深度的 Web 教学。</p></a>
+                <a href="#" class="item"><strong>Root-Me</strong><p>老牌多维挑战赛，包含加解密与逆向题目。</p></a>
+                <a href="#" class="item"><strong>CyberDefenders</strong><p>专注蓝队/防御侧，练习数字取证与应急响应。</p></a>
+                <a href="#" class="item"><strong>HackThisSite</strong><p>黑客文化的活化石，经典的闯关站点。</p></a>
+                <a href="#" class="item"><strong>Attack Defense</strong><p>基于浏览器的实验室，适合快速练习特定 CVE。</p></a>
+            </div>
+        </section>
+
+        <section id="tools">
+            <h2>常见安全工具官网</h2>
+            <div class="resource-grid">
+                <a href="https://portswigger.net/burp" class="item"><strong>Burp Suite</strong><p>渗透测试第一利器，全方位 Web 代理分析。</p></a>
+                <a href="https://nmap.org" class="item"><strong>Nmap</strong><p>网络拓扑发现与端口服务探测的标准工具。</p></a>
+                <a href="#" class="item"><strong>Metasploit</strong><p>漏洞开发与渗透利用的工业级框架。</p></a>
+                <a href="#" class="item"><strong>SQLmap</strong><p>全自动 SQL 注入工具，支持多种数据库类型。</p></a>
+                <a href="#" class="item"><strong>Wireshark</strong><p>流量嗅探与包层级协议深挖分析。</p></a>
+                <a href="#" class="item"><strong>Cobalt Strike</strong><p>后渗透 C2 (命令控制) 权限维持核心工具。</p></a>
+                <a href="#" class="item"><strong>Ghidra</strong><p>NSA 出品的逆向神器，支持多架构反编译。</p></a>
+                <a href="#" class="item"><strong>Xray Scanner</strong><p>国产自动化扫描利器，PoC 极其丰富。</p></a>
+                <a href="#" class="item"><strong>FRP</strong><p>穿透内网、映射公网服务的首选反向代理。</p></a>
+                <a href="#" class="item"><strong>Subfinder</strong><p>基于 API 的超快子域名发现与枚举。</p></a>
+                <a href="#" class="item"><strong>Amass</strong><p>OWASP 旗下深度资产收集与测绘工具。</p></a>
+            </div>
+        </section>
+
+        <section id="vps">
+            <h2>廉价 VPS & 运维推荐</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>运营商</th><th>优势特点</th><th>参考价格</th><th>运行状态</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>RackNerd</td><td>支持支付宝，价格极低，适合做扫描器</td><td>$10+/年</td><td class="status-up">Stable</td></tr>
+                        <tr><td>CloudCone</td><td>按小时计费，IP 被墙可随时销毁重建</td><td>$15+/年</td><td class="status-up">Stable</td></tr>
+                        <tr><td>Hetzner</td><td>欧洲之王，超强独立 CPU 性能，适合编译</td><td>€4+/月</td><td class="status-up">Fast</td></tr>
+                        <tr><td>Bandwagon</td><td>CN2 GIA 特化线路，国内连接速度第一</td><td>$49+/年</td><td class="status-up">Stable</td></tr>
+                        <tr><td>Oracle Cloud</td><td>ARM 永久免费 4C24G，神级福利</td><td>$0</td><td class="status-up">Free</td></tr>
+                        <tr><td>DigitalOcean</td><td>开发者社区文档最全，UI 极致丝滑</td><td>$4+/月</td><td class="status-up">Stable</td></tr>
+                        <tr><td>Vultr</td><td>全球机房布局最广，按需部署</td><td>$5+/月</td><td class="status-up">Stable</td></tr>
+                        <tr><td>BuyVM</td><td>卢森堡抗投诉，无视版权版权投诉</td><td>$3.5+/月</td><td class="status-up">Shielded</td></tr>
+                        <tr><td>AWS Lightsail</td><td>入门级云服务，首季通常提供免费试用</td><td>$3.5+/月</td><td class="status-up">Stable</td></tr>
+                        <tr><td>HostDare</td><td>针对亚洲优化的平价线路，稳定性好</td><td>$25+/年</td><td class="status-up">Stable</td></tr>
+                        <tr><td>Linode</td><td>极致的老牌稳定，SSD 读写性能优秀</td><td>$5+/月</td><td class="status-up">Stable</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="linux">
+            <h2>常见 Linux 官方镜像</h2>
+            <div class="resource-grid">
+                <a href="https://www.kali.org" class="item"><strong>Kali Linux</strong><p>安全审计与渗透测试最全能的 OS。</p></a>
+                <a href="#" class="item"><strong>Parrot Sec</strong><p>更侧重于日常开发与匿名性的安全系统。</p></a>
+                <a href="#" class="item"><strong>GrapheneOS</strong><p>基于安卓的移动端隐私安全最终方案。</p></a>
+                <a href="#" class="item"><strong>Arch Linux</strong><p>极简主义者的圣地，一切从零构建。</p></a>
+                <a href="#" class="item"><strong>Debian Stable</strong><p>服务器环境最稳定、最纯粹的系统。</p></a>
+                <a href="#" class="item"><strong>Alpine Linux</strong><p>体积微小，最适合 Docker 容器化部署。</p></a>
+                <a href="#" class="item"><strong>CentOS Stream</strong><p>企业级 RHEL 的开发前沿实验场。</p></a>
+                <a href="#" class="item"><strong>Ubuntu Server</strong><p>应用生态最丰富的云服务器系统。</p></a>
+                <a href="#" class="item"><strong>BlackArch</strong><p>Arch 分支，包含超 2800 个工具。</p></a>
+                <a href="#" class="item"><strong>Tails OS</strong><p>为了遗忘而生，彻底隐匿数字痕迹。</p></a>
+                <a href="#" class="item"><strong>TUNA 镜像站</strong><p>清华大学开源镜像站，国内极速下载。</p></a>
+            </div>
+        </section>
+
+        <section id="cloud">
+            <h2>常见云盘推荐</h2>
+            <div class="resource-grid">
+                <a href="https://www.alipan.com" class="item"><strong>阿里云盘</strong><p>大文件传输快，国内生态整合好。</p></a>
+                <a href="#" class="item"><strong>123 云盘</strong><p>不限速、支持直链，目前极佳的分享盘。</p></a>
+                <a href="#" class="item"><strong>Proton Drive</strong><p>端到端加密，适合保存敏感安全文档。</p></a>
+                <a href="#" class="item"><strong>Google Drive</strong><p>全球协作第一流，第三方应用整合丰富。</p></a>
+                <a href="#" class="item"><strong>MEGA</strong><p>经典的加密网盘，50GB 初始空间吸引力大。</p></a>
+                <a href="#" class="item"><strong>OneDrive</strong><p>Office 365 深度绑定，原生系统同步。</p></a>
+                <a href="#" class="item"><strong>蓝奏云</strong><p>小软件、脚本分发利器，不限速。</p></a>
+                <a href="#" class="item"><strong>Dropbox</strong><p>同步冲突处理最稳的老牌云存储。</p></a>
+                <a href="#" class="item"><strong>TeraBox</strong><p>百度海外版，适合超大容量备份。</p></a>
+                <a href="#" class="item"><strong>LanzouX</strong><p>更隐蔽的蓝奏分发地址。</p></a>
+                <a href="#" class="item"><strong>pCloud</strong><p>一次性买断终身空间，无月租压力。</p></a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 GUAGUA_SEC | Designed for White Hats.</p>
+        </footer>
+    </main>
+
+    <div id="backToTop" onclick="window.scrollTo(0,0)">↑</div>
+
+    <script>
+        // 搜索过滤功能
+        function filterContent() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.getElementsByClassName('item');
+            
+            for (let item of items) {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(input) ? "" : "none";
+            }
+        }
+
+        // 返回顶部按钮逻辑
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                btn.style.display = "flex";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+
+        // 导航栏高亮追踪
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll("aside a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach(a => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
