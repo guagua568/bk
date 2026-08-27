@@ -11,6 +11,9 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475669601437100"
      crossorigin="anonymous"></script>
 
+    <!-- Cloudflare Turnstile 官方 JS 脚本 -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GUAGUA_SEC | 极客资源矩阵 v4.2</title>
@@ -50,7 +53,7 @@
             z-index: 100;
         }
 
-        .brand { padding: 40px 20px; text-align: center; }
+        .brand { padding: 40px 20px 20px; text-align: center; }
         .brand h1 { font-size: 1.4rem; color: #fff; letter-spacing: 2px; }
         .brand span { color: var(--cyan); font-family: monospace; font-size: 0.8rem; }
 
@@ -61,7 +64,7 @@
             color: #fff; outline: none; font-size: 0.85rem;
         }
 
-        aside ul { list-style: none; margin-top: 20px; overflow-y: auto; flex-grow: 1; }
+        aside ul { list-style: none; margin-top: 10px; overflow-y: auto; flex-grow: 1; }
         aside a {
             display: block; padding: 12px 25px; color: var(--text-dim);
             text-decoration: none; font-size: 0.9rem; transition: 0.2s;
@@ -71,6 +74,19 @@
             background: rgba(88, 166, 255, 0.1);
             color: var(--cyan);
             border-left: 3px solid var(--cyan);
+        }
+
+        /* Turnstile 侧边栏卡片样式 */
+        .turnstile-box {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            background: rgba(0,0,0,0.15);
+        }
+        .turnstile-box p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            text-align: center;
         }
 
         /* --- 主内容 --- */
@@ -150,6 +166,13 @@
             <li><a href="#linux">镜像分发</a></li>
             <li><a href="#cloud">云盘存储</a></li>
         </ul>
+
+        <!-- Turnstile 人机验证悬挂区域 -->
+        <div class="turnstile-box">
+            <p>SECURITY CHECK</p>
+            <!-- 关键位置：请将下面的 YOUR_SITE_KEY 替换为你在 Cloudflare 获取的 Site Key -->
+            <div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY" data-theme="dark"></div>
+        </div>
     </aside>
 
     <main>
